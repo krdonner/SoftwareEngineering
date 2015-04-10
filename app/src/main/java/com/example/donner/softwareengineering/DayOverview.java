@@ -1,26 +1,19 @@
 package com.example.donner.softwareengineering;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class Main extends ActionBarActivity {
+public class DayOverview extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        Intent intent = new Intent(this,Calendar.class);
-        startActivity(intent);
+        setContentView(R.layout.activity_day_overview);
     }
 
-    int asdsdasdd = 0; //change
-    int sadsadasdas = 0;
-    int asffsdgfsdgsd = 0;
 
-
-
+    
 }
