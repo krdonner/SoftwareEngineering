@@ -20,6 +20,7 @@ public class Main extends ActionBarActivity {
     int asdsdasdd = 0; //change
     int sadsadasdas = 0;
     int asffsdgfsdgsd = 0;
+    String hej = "hej";
 
 
 

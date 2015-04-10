@@ -31,8 +31,9 @@
             android:id="@+id/gridView"
             android:layout_gravity="center_horizontal"
             android:columnWidth="30dp"
+            android:stretchMode="columnWidth"
             android:numColumns="auto_fit"
-            android:verticalSpacing="15dp"
-            android:horizontalSpacing="15dp"/>
+            android:verticalSpacing="2dp"
+            android:horizontalSpacing="10dp"/>
     </LinearLayout>
 </RelativeLayout>

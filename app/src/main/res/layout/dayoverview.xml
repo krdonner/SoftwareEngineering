@@ -7,4 +7,11 @@
     tools:context="com.example.donner.softwareengineering.DayOverview">
 
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="450dp"></LinearLayout>
 </RelativeLayout>

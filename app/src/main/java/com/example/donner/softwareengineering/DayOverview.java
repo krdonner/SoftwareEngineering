@@ -2,8 +2,6 @@ package com.example.donner.softwareengineering;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 
 public class DayOverview extends ActionBarActivity {
@@ -11,9 +9,9 @@ public class DayOverview extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_day_overview);
+        setContentView(R.layout.dayoverview);
     }
 
 
-    
+
 }
