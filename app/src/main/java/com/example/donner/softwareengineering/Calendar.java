@@ -1,5 +1,6 @@
 package com.example.donner.softwareengineering;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -24,6 +25,17 @@ public class Calendar extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(Calendar.this, ""+position, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Calendar.this, DayOverview.class);
+                startActivity(intent);
+            }
+        });
+
+        calendarGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(Calendar.this, ""+position, Toast.LENGTH_SHORT).show();
+
+                return true;
             }
         });
     }
