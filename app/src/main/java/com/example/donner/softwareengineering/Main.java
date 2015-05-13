@@ -13,7 +13,7 @@ public class Main extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        Intent intent = new Intent(this,Calendar.class);
+        Intent intent = new Intent(this,MyCalendarActivity.class);
         startActivity(intent);
     }
 

@@ -31,11 +31,11 @@ public class ImageAdapterForCalendar extends BaseAdapter {
         return 0;
     }
 
-    // create a new ImageView for each item referenced by the Adapter
+
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
         if (convertView == null) {
-            // if it's not recycled, initialize some attributes
+
             imageView = new ImageView(mContext);
             imageView.setLayoutParams(new GridView.LayoutParams(57,57));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -48,24 +48,24 @@ public class ImageAdapterForCalendar extends BaseAdapter {
         return imageView;
     }
 
-    // references to our images
+
     private Integer[] mThumbIds = {
-            R.drawable.gridfill, R.drawable.gridfill,
-            R.drawable.gridfill, R.drawable.gridfill,
-            R.drawable.gridfill, R.drawable.gridfill,
-            R.drawable.gridfill, R.drawable.gridfill,
-            R.drawable.gridfill, R.drawable.gridfill,
-            R.drawable.gridfill, R.drawable.gridfill,
-            R.drawable.gridfill, R.drawable.gridfill,
-            R.drawable.gridfill, R.drawable.gridfill,
-            R.drawable.gridfill, R.drawable.gridfill,
-            R.drawable.gridfill, R.drawable.gridfill,
-            R.drawable.gridfill, R.drawable.gridfill,
-            R.drawable.gridfill, R.drawable.gridfill,
-            R.drawable.gridfill, R.drawable.gridfill,
-            R.drawable.gridfill, R.drawable.gridfill,
-            R.drawable.gridfill, R.drawable.gridfill,
-            R.drawable.gridfill, R.drawable.gridfill
+            R.drawable.gridfill2, R.drawable.gridfill2,
+            R.drawable.gridfill2, R.drawable.gridfill2,
+            R.drawable.gridfill2, R.drawable.gridfill2,
+            R.drawable.gridfill2, R.drawable.gridfill2,
+            R.drawable.gridfill2, R.drawable.gridfill2,
+            R.drawable.gridfill2, R.drawable.gridfill2,
+            R.drawable.gridfill2, R.drawable.gridfill2,
+            R.drawable.gridfill2, R.drawable.gridfill2,
+            R.drawable.gridfill2, R.drawable.gridfill2,
+            R.drawable.gridfill2, R.drawable.gridfill2,
+            R.drawable.gridfill2, R.drawable.gridfill2,
+            R.drawable.gridfill2, R.drawable.gridfill2,
+            R.drawable.gridfill2, R.drawable.gridfill2,
+            R.drawable.gridfill2, R.drawable.gridfill2,
+            R.drawable.gridfill2, R.drawable.gridfill2,
+            R.drawable.gridfill2, R.drawable.gridfill2
     };
 }
 
