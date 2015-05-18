@@ -14,6 +14,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -333,6 +334,14 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
 
             gridcell = (Button) row.findViewById(R.id.calendar_day_gridcell);
             gridcell.setOnClickListener(this);
+            gridcell.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Intent intent = new Intent(MyCalendarActivity.this, DayOverview.class);
+                    startActivity(intent);
+                    return false;
+                }
+            });
 
 
 
@@ -365,7 +374,7 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
                         R.color.dark));
             }
             if (day_color[1].equals("BLUE")) {
-                gridcell.setTextColor(getResources().getColor(R.color.dark));
+                gridcell.setTextColor(getResources().getColor(R.color.orrange));
             }
             return row;
         }

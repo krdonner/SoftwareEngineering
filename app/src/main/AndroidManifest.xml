@@ -20,6 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Register"/>
+        <activity android:name=".MyCalendarActivity"/>
+        <activity android:name=".DayOverview"/>
     </application>
 
 </manifest>
