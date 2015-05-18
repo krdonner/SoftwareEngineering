@@ -24,7 +24,7 @@ public class Register extends Activity {
     Button registerUser;
 
     final String DB_DRIVER = "com.mysql.jdbc.Driver";
-    final String DB_CONNECTION = "jdbc:mysql://donnersslednaip.ddns.net:3306/projekt";
+    final String DB_CONNECTION = "jdbc:mysql://89.160.102.7:3306/projekt";
     final String DB_USER = "ruut";
     final String DB_PASSWORD = "rooot";
 
