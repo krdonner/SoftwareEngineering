@@ -37,9 +37,7 @@ public class DayOverview extends Activity {
 
                 int itemPosition = position;
                 String itemValue = (String) listView.getItemAtPosition(position);
-                Toast.makeText(getApplicationContext(),
-                        "Position :" + itemPosition + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
-                        .show();
+
 
             }
 
