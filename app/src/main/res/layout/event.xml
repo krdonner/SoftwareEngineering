@@ -1,0 +1,498 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="MyCalendar"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="00-01:"
+        android:id="@+id/zeroOne"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="01-02:"
+        android:id="@+id/oneTwo"
+        android:layout_below="@+id/zeroOne"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="02-03:"
+        android:id="@+id/twoThree"
+        android:layout_below="@+id/oneTwo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="03-04:"
+        android:id="@+id/threeFour"
+        android:layout_below="@+id/twoThree"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="04-05:"
+        android:id="@+id/fourFive"
+        android:layout_below="@+id/threeFour"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="05-06:"
+        android:id="@+id/fiveSix"
+        android:layout_below="@+id/fourFive"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="06-07:"
+        android:id="@+id/sixSeven"
+        android:layout_below="@+id/fiveSix"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="07-08:"
+        android:id="@+id/sevenEight"
+        android:layout_below="@+id/sixSeven"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="08-09:"
+        android:id="@+id/eightNine"
+        android:layout_below="@+id/sevenEight"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="09-10:"
+        android:id="@+id/nineTen"
+        android:layout_below="@+id/eightNine"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="10-11:"
+        android:id="@+id/tenEleven"
+        android:layout_below="@+id/nineTen"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="11-12:"
+        android:id="@+id/elevenTwelve"
+        android:layout_below="@+id/tenEleven"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="12-13:"
+        android:id="@+id/twelveThirteen"
+        android:layout_below="@+id/elevenTwelve"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="13-14:"
+        android:id="@+id/thirteenFourteen"
+        android:layout_below="@+id/twelveThirteen"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="14-15:"
+        android:id="@+id/fourteenFifteen"
+        android:layout_below="@+id/thirteenFourteen"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="15-16:"
+        android:id="@+id/fifteenSixteen"
+        android:layout_below="@+id/fourteenFifteen"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="16-17:"
+        android:id="@+id/sixteenSeventeen"
+        android:layout_below="@+id/fifteenSixteen"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="17-18:"
+        android:id="@+id/seventeenEighteen"
+        android:layout_below="@+id/sixteenSeventeen"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="18-19:"
+        android:id="@+id/eighteenNineteen"
+        android:layout_below="@+id/seventeenEighteen"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="19-20:"
+        android:id="@+id/nineteenTwenty"
+        android:layout_below="@+id/eighteenNineteen"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="20-21:"
+        android:id="@+id/twentyTwentyone"
+        android:layout_below="@+id/nineteenTwenty"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="21-22:"
+        android:id="@+id/twentyoneTwentytwo"
+        android:layout_below="@+id/twentyTwentyone"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="22-23:"
+        android:id="@+id/twentytwoTwentythree"
+        android:layout_below="@+id/twentyoneTwentytwo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="23-00:"
+        android:id="@+id/twentythreeZero"
+        android:layout_below="@+id/twentytwoTwentythree"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/zeroOneText"
+        android:layout_alignTop="@+id/zeroOne"
+        android:layout_toLeftOf="@+id/textView"
+        android:layout_toStartOf="@+id/textView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/oneTwoText"
+        android:layout_above="@+id/twoThree"
+        android:layout_alignLeft="@+id/zeroOneText"
+        android:layout_alignStart="@+id/zeroOneText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/twoThreeText"
+        android:layout_above="@+id/threeFour"
+        android:layout_alignLeft="@+id/zeroOneText"
+        android:layout_alignStart="@+id/zeroOneText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/threeFourText"
+        android:layout_alignBottom="@+id/threeFour"
+        android:layout_alignLeft="@+id/oneTwoText"
+        android:layout_alignStart="@+id/oneTwoText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/fourFiveText"
+        android:layout_above="@+id/fiveSix"
+        android:layout_alignLeft="@+id/twoThreeText"
+        android:layout_alignStart="@+id/twoThreeText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/fiveSixText"
+        android:layout_above="@+id/sixSeven"
+        android:layout_alignLeft="@+id/threeFourText"
+        android:layout_alignStart="@+id/threeFourText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/sixSevenText"
+        android:layout_above="@+id/sevenEight"
+        android:layout_alignLeft="@+id/fourFiveText"
+        android:layout_alignStart="@+id/fourFiveText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/sevenEightText"
+        android:layout_alignBottom="@+id/sevenEight"
+        android:layout_alignLeft="@+id/fiveSixText"
+        android:layout_alignStart="@+id/fiveSixText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/eightNineText"
+        android:layout_above="@+id/nineTen"
+        android:layout_alignLeft="@+id/sixSevenText"
+        android:layout_alignStart="@+id/sixSevenText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/nineTenText"
+        android:layout_above="@+id/tenEleven"
+        android:layout_alignLeft="@+id/sevenEightText"
+        android:layout_alignStart="@+id/sevenEightText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/tenElevenText"
+        android:layout_above="@+id/elevenTwelve"
+        android:layout_alignLeft="@+id/eightNineText"
+        android:layout_alignStart="@+id/eightNineText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/elevenTwelveText"
+        android:layout_alignBottom="@+id/elevenTwelve"
+        android:layout_alignLeft="@+id/nineTenText"
+        android:layout_alignStart="@+id/nineTenText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/twelveThirteenText"
+        android:layout_above="@+id/thirteenFourteen"
+        android:layout_alignLeft="@+id/tenElevenText"
+        android:layout_alignStart="@+id/tenElevenText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/thirteenFourteenText"
+        android:layout_above="@+id/fourteenFifteen"
+        android:layout_alignLeft="@+id/elevenTwelveText"
+        android:layout_alignStart="@+id/elevenTwelveText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/fourteenFifteenText"
+        android:layout_above="@+id/fifteenSixteen"
+        android:layout_alignLeft="@+id/twelveThirteenText"
+        android:layout_alignStart="@+id/twelveThirteenText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/fifteenSixteenText"
+        android:layout_alignBottom="@+id/fifteenSixteen"
+        android:layout_alignLeft="@+id/thirteenFourteenText"
+        android:layout_alignStart="@+id/thirteenFourteenText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/sixteenSeventeenText"
+        android:layout_above="@+id/seventeenEighteen"
+        android:layout_alignLeft="@+id/fourteenFifteenText"
+        android:layout_alignStart="@+id/fourteenFifteenText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/seventeenEighteenText"
+        android:layout_above="@+id/eighteenNineteen"
+        android:layout_alignLeft="@+id/fifteenSixteenText"
+        android:layout_alignStart="@+id/fifteenSixteenText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/eighteenNineteenText"
+        android:layout_above="@+id/nineteenTwenty"
+        android:layout_alignLeft="@+id/sixteenSeventeenText"
+        android:layout_alignStart="@+id/sixteenSeventeenText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/nineteenTwentyText"
+        android:layout_alignBottom="@+id/nineteenTwenty"
+        android:layout_alignLeft="@+id/seventeenEighteenText"
+        android:layout_alignStart="@+id/seventeenEighteenText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/twentyTwentyoneText"
+        android:layout_above="@+id/twentyoneTwentytwo"
+        android:layout_alignLeft="@+id/eighteenNineteenText"
+        android:layout_alignStart="@+id/eighteenNineteenText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/twentyoneTwentytwoText"
+        android:layout_above="@+id/twentytwoTwentythree"
+        android:layout_alignLeft="@+id/nineteenTwentyText"
+        android:layout_alignStart="@+id/nineteenTwentyText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/twentytwoTwentythreeText"
+        android:layout_above="@+id/twentythreeZero"
+        android:layout_alignLeft="@+id/twentyTwentyoneText"
+        android:layout_alignStart="@+id/twentyTwentyoneText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/twentythreeZeroText"
+        android:layout_alignBottom="@+id/twentythreeZero"
+        android:layout_alignLeft="@+id/twentyoneTwentytwoText"
+        android:layout_alignStart="@+id/twentyoneTwentytwoText" />
+
+</RelativeLayout>
