@@ -1,10 +1,12 @@
 package com.example.donner.softwareengineering;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,26 +18,38 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Main extends Activity {
 
     final String DB_DRIVER = "com.mysql.jdbc.Driver";
-    final String DB_CONNECTION = "jdbc:mysql://donnersslednaip.ddns.net:3306/projekt";
+    final String DB_CONNECTION = "jdbc:mysql://89.160.102.7:3306/projekt";
     final String DB_USER = "ruut";
     final String DB_PASSWORD = "rooot";
+    public ArrayList<Integer>dates = new ArrayList<Integer>();
 
-    private EditText username, password;
+    private static EditText username;
+    public static EditText password;
+
+    public static EditText getUsername() {
+        return username;
+    }
+
+    public static void setUsername(EditText username) {
+        Main.username = username;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        Intent intent = new Intent(this, MyCalendarActivity.class);
-        startActivity(intent);
+
+
         // getActionBar().hide();
 
-        username = (EditText) findViewById(R.id.username);
+        setUsername((EditText) findViewById(R.id.username));
         password = (EditText) findViewById(R.id.password);
     }
 
@@ -67,12 +81,12 @@ public class Main extends Activity {
     }
 
     public void loginButton(View view) {
-        if (username.getText().toString().equals("") || password.getText().toString().equals("")) {
+        if (getUsername().getText().toString().equals("") || password.getText().toString().equals("")) {
             Toast.makeText(getApplicationContext(), "Login details missing.", Toast.LENGTH_SHORT).show();
-            username.getText().clear();
+            getUsername().getText().clear();
             password.getText().clear();
         } else {
-            LoginAsync l = new LoginAsync(username.getText().toString(), password.getText().toString());
+            LoginAsync l = new LoginAsync(getUsername().getText().toString(), password.getText().toString());
             l.execute(getApplicationContext());
         }
     }
@@ -91,6 +105,7 @@ public class Main extends Activity {
         protected Cursor doInBackground(Object... params) {
 
             try {
+                getDates();
                 String un = doesUsernameExist();
                 System.out.println("un = " + un);
                 String pw = getRelatedPassword();
@@ -109,12 +124,16 @@ public class Main extends Activity {
 
             if (user.equals(u) && pass.equals(p)) {
                 System.out.println("Logging in!");
+                Intent intent = new Intent(Main.this, MyCalendarActivity.class);
+                intent.putExtra("dates", dates);
+
+                startActivity(intent);
 
             } else if (!user.equals(u) || !pass.equals(p)) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        username.getText().clear();
+                        getUsername().getText().clear();
                         password.getText().clear();
                         Toast.makeText(getApplicationContext(), "Wrong login information.", Toast.LENGTH_SHORT).show();
                     }
@@ -127,7 +146,7 @@ public class Main extends Activity {
             Connection dbConnection;
             String returnValue = null;
 
-            String selectSQL = "SELECT username FROM user WHERE username = " + "'" + username.getText().toString() + "'";
+            String selectSQL = "SELECT username FROM user WHERE username = " + "'" + getUsername().getText().toString() + "'";
 
             try {
                 dbConnection = getDBConnection();
@@ -147,13 +166,39 @@ public class Main extends Activity {
             }
             return returnValue;
         }
+        private String getDates() throws SQLException {
+
+            Connection dbConnection;
+            String returnValue = null;
+
+            String selectSQL = "SELECT date FROM calendar WHERE username = " + "'" + getUsername().getText().toString() + "'";
+
+            try {
+                dbConnection = getDBConnection();
+                Statement st = dbConnection.createStatement();
+
+                ResultSet rs = st.executeQuery(selectSQL);
+
+                while (rs.next()) {
+                         dates.add(rs.getInt("date"));
+
+                }
+
+
+                dbConnection.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+            return returnValue;
+        }
+
 
         private String getRelatedPassword() throws SQLException {
 
             Connection dbConnection;
             String returnValue = null;
 
-            String selectSQL = "SELECT password FROM user WHERE username = " + "'" + username.getText().toString() + "'";
+            String selectSQL = "SELECT password FROM user WHERE username = " + "'" + getUsername().getText().toString() + "'";
 
             try {
                 dbConnection = getDBConnection();
