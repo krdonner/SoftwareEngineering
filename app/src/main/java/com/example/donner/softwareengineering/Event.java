@@ -69,7 +69,6 @@ public class Event extends Activity {
         twentythreeZero = (TextView) findViewById(R.id.twentythreeZeroText);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -109,7 +108,6 @@ public class Event extends Activity {
 
         @Override
         protected Cursor doInBackground(Object... params) {
-
             getDayInformationFromDatabase(user, day);
             return null;
         }
@@ -120,32 +118,9 @@ public class Event extends Activity {
 
             Connection dbConnection;
 
-            String selectDate = "SELECT notes, begins, ends FROM calendar WHERE userName = " + "'" + u + "'" + " and date = '" + d + "'";
-            /* String select1 = "SELECT notes FROM calender WHERE userName = " + "'" + user + "'" + " and date = " + date + " and begins = '01' and ends = '02'";
-            String select2 = "SELECT notes FROM calender WHERE userName = " + "'" + user + "'" + " and date = " + date + " and begins = '02' and ends = '03'";
-            String select3 = "SELECT notes FROM calender WHERE userName = " + "'" + user + "'" + " and date = " + date + " and begins = '03' and ends = '04'";
-            String select4 = "SELECT notes FROM calender WHERE userName = " + "'" + user + "'" + " and date = " + date + " and begins = '04' and ends = '05'";
-            String select5 = "SELECT notes FROM calender WHERE userName = " + "'" + user + "'" + " and date = " + date + " and begins = '05' and ends = '06'";
-            String select6 = "SELECT notes FROM calender WHERE userName = " + "'" + user + "'" + " and date = " + date + " and begins = '06' and ends = '07'";
-            String select7 = "SELECT notes FROM calender WHERE userName = " + "'" + user + "'" + " and date = " + date + " and begins = '07' and ends = '08'";
-            String select8 = "SELECT notes FROM calender WHERE userName = " + "'" + user + "'" + " and date = " + date + " and begins = '08' and ends = '09'";
-            String select9 = "SELECT notes FROM calender WHERE userName = " + "'" + user + "'" + " and date = " + date + " and begins = '09' and ends = '10'";
-            String select10 = "SELECT notes FROM calender WHERE userName = " + "'" + user + "'" + " and date = " + date + " and begins = '10' and ends = '11'";
-            String select11 = "SELECT notes FROM calender WHERE userName = " + "'" + user + "'" + " and date = " + date + " and begins = '11' and ends = '12'";
-            String select12 = "SELECT notes FROM calender WHERE userName = " + "'" + user + "'" + " and date = " + date + " and begins = '12' and ends = '13'";
-            String select13 = "SELECT notes FROM calender WHERE userName = " + "'" + user + "'" + " and date = " + date + " and begins = '13' and ends = '14'";
-            String select14 = "SELECT notes FROM calender WHERE userName = " + "'" + user + "'" + " and date = " + date + " and begins = '14' and ends = '15'";
-            String select15 = "SELECT notes FROM calender WHERE userName = " + "'" + user + "'" + " and date = " + date + " and begins = '15' and ends = '16'";
-            String select16 = "SELECT notes FROM calender WHERE userName = " + "'" + user + "'" + " and date = " + date + " and begins = '16' and ends = '17'";
-            String select17 = "SELECT notes FROM calender WHERE userName = " + "'" + user + "'" + " and date = " + date + " and begins = '17' and ends = '18'";
-            String select18 = "SELECT notes FROM calender WHERE userName = " + "'" + user + "'" + " and date = " + date + " and begins = '18' and ends = '19'";
-            String select19 = "SELECT notes FROM calender WHERE userName = " + "'" + user + "'" + " and date = " + date + " and begins = '19' and ends = '20'";
-            String select20 = "SELECT notes FROM calender WHERE userName = " + "'" + user + "'" + " and date = " + date + " and begins = '20' and ends = '21'";
-            String select21 = "SELECT notes FROM calender WHERE userName = " + "'" + user + "'" + " and date = " + date + " and begins = '21' and ends = '22'";
-            String select22 = "SELECT notes FROM calender WHERE userName = " + "'" + user + "'" + " and date = " + date + " and begins = '22' and ends = '23'";
-            String select23 = "SELECT notes FROM calender WHERE userName = " + "'" + user + "'" + " and date = " + date + " and begins = '23' and ends = '00'"; */
+            String selectDate = "SELECT activity, begins, ends FROM calendar WHERE userName = " + "'" + u + "'" + " and date = '" + d + "'";
 
-            String note, begin, end;
+            String activity, begin, end;
 
             try {
                 dbConnection = getDBConnection();
@@ -153,90 +128,92 @@ public class Event extends Activity {
                 ResultSet rs = st.executeQuery(selectDate);
 
                 while (rs.next()) {
-                    note = rs.getString("notes");
+                    activity = rs.getString("activity");
                     begin = rs.getString("begins");
                     end = rs.getString("ends");
-                    System.out.println(note);
+                    System.out.println(activity);
                     System.out.println(begin);
                     System.out.println(end);
 
                     final int finalBegin = Integer.parseInt(begin);
                     final int finalEnd = Integer.parseInt(end);
-                    final String finalNote = note;
+                    final String finalActivity = activity;
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             if (finalBegin == 0){
-                                zeroOne.setText(finalNote);
+                                zeroOne.setText(finalActivity);
                             }
-                            if (finalBegin <= 1 && finalEnd >= 1){
-                                oneTwo.setText(finalNote);
+                            if (finalEnd < 1){
+                                oneTwo.setText("");
+                            } else if (finalBegin <= 1 && finalEnd >= 1){
+                                oneTwo.setText(finalActivity);
                             }
                             if (finalBegin <= 2 && finalEnd >= 2){
-                                twoThree.setText(finalNote);
+                                twoThree.setText(finalActivity);
                             }
                             if (finalBegin <= 3 && finalEnd >= 3){
-                                threeFour.setText(finalNote);
+                                threeFour.setText(finalActivity);
                             }
                             if (finalBegin <= 4 && finalEnd >= 4){
-                                fourFive.setText(finalNote);
+                                fourFive.setText(finalActivity);
                             }
                             if (finalBegin <= 5 && finalEnd >= 5){
-                                fiveSix.setText(finalNote);
+                                fiveSix.setText(finalActivity);
                             }
                             if (finalBegin <= 6 && finalEnd >= 6){
-                                sixSeven.setText(finalNote);
+                                sixSeven.setText(finalActivity);
                             }
                             if (finalBegin <= 7 && finalEnd >= 7){
-                                sevenEight.setText(finalNote);
+                                sevenEight.setText(finalActivity);
                             }
                             if (finalBegin <= 8 && finalEnd >= 8){
-                                eightNine.setText(finalNote);
+                                eightNine.setText(finalActivity);
                             }
                             if (finalBegin <= 9 && finalEnd >= 9){
-                                nineTen.setText(finalNote);
+                                nineTen.setText(finalActivity);
                             }
                             if (finalBegin <= 10 && finalEnd >= 10){
-                                tenEleven.setText(finalNote);
+                                tenEleven.setText(finalActivity);
                             }
                             if (finalBegin <= 11 && finalEnd >= 11){
-                                elevenTwelve.setText(finalNote);
+                                elevenTwelve.setText(finalActivity);
                             }
                             if (finalBegin <= 12 && finalEnd >= 12){
-                                twelveThirteen.setText(finalNote);
+                                twelveThirteen.setText(finalActivity);
                             }
                             if (finalBegin <= 13 && finalEnd >= 13){
-                                thirteenFourteen.setText(finalNote);
+                                thirteenFourteen.setText(finalActivity);
                             }
                             if (finalBegin <= 14 && finalEnd >= 14){
-                                fourteenFifteen.setText(finalNote);
+                                fourteenFifteen.setText(finalActivity);
                             }
                             if (finalBegin <= 15 && finalEnd >= 15){
-                                fifteenSixteen.setText(finalNote);
+                                fifteenSixteen.setText(finalActivity);
                             }
                             if (finalBegin <= 16 && finalEnd >= 16){
-                                sixteenSeventeen.setText(finalNote);
+                                sixteenSeventeen.setText(finalActivity);
                             }
                             if (finalBegin <= 17 && finalEnd >= 17){
-                                seventeenEighteen.setText(finalNote);
+                                seventeenEighteen.setText(finalActivity);
                             }
                             if (finalBegin <= 18 && finalEnd >= 18){
-                                eighteenNineteen.setText(finalNote);
+                                eighteenNineteen.setText(finalActivity);
                             }
                             if (finalBegin <= 19 && finalEnd >= 19){
-                                nineteenTwenty.setText(finalNote);
+                                nineteenTwenty.setText(finalActivity);
                             }
                             if (finalBegin <= 20 && finalEnd >= 20){
-                                twentyTwentyone.setText(finalNote);
+                                twentyTwentyone.setText(finalActivity);
                             }
                             if (finalBegin <= 21 && finalEnd >= 21){
-                                twentyoneTwentytwo.setText(finalNote);
+                                twentyoneTwentytwo.setText(finalActivity);
                             }
                             if (finalBegin <= 22 && finalEnd >= 22){
-                                twentytwoTwentythree.setText(finalNote);
+                                twentytwoTwentythree.setText(finalActivity);
                             }
                             if (finalBegin <= 23 && finalEnd >= 23){
-                                twentythreeZero.setText(finalNote);
+                                twentythreeZero.setText(finalActivity);
                             }
                         }
                     });

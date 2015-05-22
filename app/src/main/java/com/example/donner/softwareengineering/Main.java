@@ -33,7 +33,7 @@ public class Main extends Activity {
         setContentView(R.layout.main);
         Intent intent = new Intent(this, Event.class);
         intent.putExtra("username","hassel");
-        intent.putExtra("date","20150519");
+        intent.putExtra("date","2015519");
         startActivity(intent);
         // getActionBar().hide();
 
