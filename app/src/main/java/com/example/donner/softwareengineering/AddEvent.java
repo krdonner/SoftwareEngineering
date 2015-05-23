@@ -1,10 +1,6 @@
 package com.example.donner.softwareengineering;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -14,7 +10,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -22,9 +17,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-/**
- * Created by Donner on 2015-05-18.
- */
 public class AddEvent extends ActionBarActivity{
 
     final String DB_DRIVER = "com.mysql.jdbc.Driver";
@@ -43,10 +35,17 @@ public class AddEvent extends ActionBarActivity{
     private static String act;
     private static String note;
     private Statement state;
+    public String user;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addevent);
+
+        Bundle myBundle = getIntent().getExtras();
+        if (myBundle != null) {
+            user = myBundle.getString("user");
+        }
+
         myTimePicker = (TimePicker)findViewById(R.id.timePicker);
         myDatePicker = (DatePicker)findViewById(R.id.datePicker);
         button = (Button)findViewById(R.id.saveButton);
@@ -65,23 +64,14 @@ public class AddEvent extends ActionBarActivity{
                 act = edActivity.getText().toString();
                 note = edNotes.getText().toString();
 
-
-                LoginAsync login = new LoginAsync();
-                login.execute(getApplicationContext());
-
-
-
+                AddAsync editA = new AddAsync();
+                editA.execute(getApplicationContext());
             }
         });
 
     }
 
-    private class LoginAsync extends AsyncTask<Object, Object, Cursor> {
-
-        String user;
-        String pass;
-
-
+    private class AddAsync extends AsyncTask<Object, Object, Cursor> {
 
         @Override
         protected Cursor doInBackground(Object... params) {
@@ -102,10 +92,11 @@ public class AddEvent extends ActionBarActivity{
 
             Connection dbConnection;
             String returnValue = null;
+            int id = getEventID();
 
             String insertTableSQL = "INSERT INTO calendar"
-                    + "(username, activity, notes, begins, ends, location, date) VALUES"
-                    + "('hassel'"+","+ "'"+act+"'"+","+ "'"+note+"'"+","+hour+","+ "16"+"," +"'"+"malmo"+"'"+","+ "20150519"+")";
+                    + "(id, username, activity, notes, begins, ends, location, date) VALUES"
+                    + "(" + id +"," + "'"+user+"'"+","+ "'"+act+"'"+","+ "'"+note+"'"+","+hour+","+ "16"+"," +"'"+"malmo"+"'"+","+ "2015525"+")";
 
             try {
                 Log.d("test", "1");
@@ -122,6 +113,32 @@ public class AddEvent extends ActionBarActivity{
                 System.out.println(e.getMessage());
             }
             return returnValue;
+        }
+
+        private int getEventID() throws SQLException {
+
+            Connection dbConnection;
+            int returnValue = 0;
+
+            String idSQL = "SELECT id FROM calendar ORDER BY id";
+
+            try {
+                dbConnection = getDBConnection();
+                Statement st = dbConnection.createStatement();
+
+                ResultSet rs = st.executeQuery(idSQL);
+
+                while (rs.next()) {
+                    returnValue = rs.getInt("id");
+                    System.out.println(returnValue);
+                }
+                rs.close();
+                st.close();
+                dbConnection.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+            return returnValue+1;
         }
 
         private Connection getDBConnection() {

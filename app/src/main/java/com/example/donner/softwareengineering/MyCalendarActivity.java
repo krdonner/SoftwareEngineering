@@ -10,43 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.Bundle;
-import android.text.format.DateFormat;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -60,7 +26,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 public class MyCalendarActivity extends Activity implements OnClickListener {
     private static final String tag = "MyCalendarActivity";
@@ -83,6 +48,7 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
     public static String date;
     public static int dateInInteger;
     public static ArrayList<Integer> dates;
+    public String user;
 
 
     @Override
@@ -92,6 +58,8 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
         final Intent intent = getIntent();
         final Bundle extraBundle = intent.getExtras();
 
+        user = getIntent().getStringExtra("user");
+        System.out.println(user);
         dates = (ArrayList<Integer>) getIntent().getSerializableExtra("dates");
 
         if (dates.size() == 0) {
@@ -100,7 +68,6 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
         } else {
             for (int i = 0; i < dates.size(); i++) {
                 System.out.println(dates.get(i));
-
             }
         }
 
@@ -155,10 +122,8 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
             } else {
                 month++;
             }
-
             setGridCellAdapterToDate(month, year);
         }
-
     }
 
     @Override
@@ -224,7 +189,6 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
             return list.size();
         }
 
-
         private void printMonth(int mm, int yy) {
             int trailingSpaces = 0;
             int daysInPrevMonth = 0;
@@ -270,7 +234,6 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
                     ++daysInPrevMonth;
 
             for (int i = 0; i < trailingSpaces; i++) {
-
                 list.add(String
                         .valueOf((daysInPrevMonth - trailingSpaces + DAY_OFFSET)
                                 + i)
@@ -280,7 +243,6 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
                         + "-"
                         + prevYear);
             }
-
 
             for (int i = 1; i <= daysInMonth; i++) {
                 Log.d(currentMonthName, String.valueOf(i) + " "
@@ -294,7 +256,6 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
                 }
             }
 
-
             for (int i = 0; i < list.size() % 7; i++) {
                 Log.d(tag, "NEXT MONTH:= " + getMonthAsString(nextMonth));
                 list.add(String.valueOf(i + 1) + "-GREY" + "-"
@@ -305,7 +266,6 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
         private HashMap<String, Integer> findNumberOfEventsPerMonth(int year,
                                                                     int month) {
             HashMap<String, Integer> map = new HashMap<String, Integer>();
-
             return map;
         }
 
@@ -372,8 +332,8 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
                     date = yearToAddToEvent + monthToAddToEvent + dayToAddToEvent;
                     System.out.println(date);
 
-
                     Intent intent = new Intent(MyCalendarActivity.this, DayOverview.class);
+                    intent.putExtra("user", user);
                     intent.putExtra("date", date);
                     intent.putExtra("theDay", theday);
                     startActivity(intent);
@@ -386,12 +346,10 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
                 public void onClick(View view) {
                     long dayInInteger = getItemId(position);
                     getCurrentDayOfMonth();
-
                     Toast.makeText(getApplicationContext(), yearToAddToEvent + monthToAddToEvent + dayToAddToEvent, Toast.LENGTH_LONG).show();
 
-
                     Intent intent = new Intent(MyCalendarActivity.this, AddEvent.class);
-                    intent.putExtra("id", getItemId(position));
+                    intent.putExtra("user", user);
                     startActivity(intent);
                 }
             });
@@ -422,7 +380,6 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
             }
             dayToAddToEvent = theday;
 
-
             dateInInteger = Integer.parseInt(year + monthToAddToEvent + dayToAddToEvent);
             System.out.println("date in integer" + dateInInteger);
             gridcell.setText(theday);
@@ -442,16 +399,10 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
             for (int i = 0; i < dates.size(); i++) {
                 if (dateInInteger == dates.get(i) && !day_color[1].equals("GREY")) {
                     gridcell.setTextColor(getResources().getColor(R.color.sky));
-
                 }
             }
-
-
             return row;
-
-
         }
-
 
         @Override
         public void onClick(View view) {
@@ -460,7 +411,6 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
             try {
                 Date parsedDate = dateFormatter.parse(date_month_year);
                 Log.d(tag, "Parsed Date: " + parsedDate.toString());
-
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -483,6 +433,4 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
         }
 
     }
-
-
 }

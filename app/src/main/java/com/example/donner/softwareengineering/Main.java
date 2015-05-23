@@ -1,14 +1,10 @@
 package com.example.donner.softwareengineering;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,8 +15,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
-
 
 public class Main extends Activity {
 
@@ -28,7 +22,7 @@ public class Main extends Activity {
     final String DB_CONNECTION = "jdbc:mysql://89.160.102.7:3306/projekt";
     final String DB_USER = "ruut";
     final String DB_PASSWORD = "rooot";
-    public ArrayList<Integer>dates = new ArrayList<Integer>();
+    public ArrayList<Integer> dates = new ArrayList<Integer>();
 
     private static EditText username;
     public static EditText password;
@@ -46,34 +40,10 @@ public class Main extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-
         // getActionBar().hide();
 
         setUsername((EditText) findViewById(R.id.username));
         password = (EditText) findViewById(R.id.password);
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public void registerButton(View view) {
@@ -126,7 +96,7 @@ public class Main extends Activity {
                 System.out.println("Logging in!");
                 Intent intent = new Intent(Main.this, MyCalendarActivity.class);
                 intent.putExtra("dates", dates);
-
+                intent.putExtra("user", user);
                 startActivity(intent);
 
             } else if (!user.equals(u) || !pass.equals(p)) {
@@ -166,6 +136,7 @@ public class Main extends Activity {
             }
             return returnValue;
         }
+
         private String getDates() throws SQLException {
 
             Connection dbConnection;
@@ -180,18 +151,14 @@ public class Main extends Activity {
                 ResultSet rs = st.executeQuery(selectSQL);
 
                 while (rs.next()) {
-                         dates.add(rs.getInt("date"));
-
+                    dates.add(rs.getInt("date"));
                 }
-
-
                 dbConnection.close();
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
             return returnValue;
         }
-
 
         private String getRelatedPassword() throws SQLException {
 

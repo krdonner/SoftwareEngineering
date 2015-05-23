@@ -16,9 +16,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-/**
- * Created by ANLU0108 on 2015-05-05.
- */
 public class Register extends Activity {
     EditText username, password, passwordRepeat;
     Button registerUser;
@@ -157,41 +154,26 @@ public class Register extends Activity {
                 if (dbConnection != null) {
                     dbConnection.close();
                 }
-
             }
         }
-
 
         private Connection getDBConnection() {
 
             Connection dbConnection = null;
 
             try {
-
                 Class.forName(DB_DRIVER);
-
             } catch (ClassNotFoundException e) {
-
                 System.out.println(e.getMessage());
-
             }
-
             try {
-
                 dbConnection = DriverManager.getConnection(
                         DB_CONNECTION, DB_USER, DB_PASSWORD);
                 return dbConnection;
-
             } catch (SQLException e) {
-
                 System.out.println(e.getMessage());
-
             }
-
             return dbConnection;
-
         }
-
-
     }
 }
