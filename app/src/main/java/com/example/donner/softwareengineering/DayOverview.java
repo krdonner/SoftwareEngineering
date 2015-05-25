@@ -1,6 +1,8 @@
 package com.example.donner.softwareengineering;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -10,9 +12,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -30,10 +34,12 @@ public class DayOverview extends Activity {
     static int endsFromDB;
     static String locationFromDB;
     static String activityFromDB;
+    static int idFromDB;
     String[] values;
     private Statement state;
-    ResultSet rs;
+    static ResultSet rs;
     public String user;
+    private Statement st;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +62,7 @@ public class DayOverview extends Activity {
                 "18", "19", "20", "21", "22", "23"};
         System.out.print(dateInteger + "   " + dateFromDB);
     }
+
 
     private class DayOverviewAsync extends AsyncTask<Object, Object, Cursor> {
 
@@ -89,18 +96,41 @@ public class DayOverview extends Activity {
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
 
-                    int itemPosition = position;
+                    final int itemPosition = position;
                     String itemValue = (String) listView.getItemAtPosition(position);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(DayOverview.this);
+                    builder.setMessage("Edit or remove the event?")
+                            .setCancelable(false)
+                            .setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    Intent intent = new Intent(DayOverview.this, EditEvent.class);
+                                    intent.putExtra("user", user);
+                                    intent.putExtra("begins", itemPosition);
+                                    startActivity(intent);
+                                }
+                            })
+                            .setNegativeButton("Remove", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    deleteAsync da = new deleteAsync();
+                                    da.execute();
 
-                    Intent intent = new Intent(DayOverview.this, EditEvent.class);
-                    intent.putExtra("user", user);
-                    intent.putExtra("begins", itemPosition);
-                    startActivity(intent);
+                                    Intent intent = new Intent(DayOverview.this, MyCalendarActivity.class);
+                                    startActivity(intent);
+
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
+
                 }
 
             });
+
+
         }
     }
+
 
     private int getDate() throws SQLException {
         Log.d("hej", "test1");
@@ -108,7 +138,7 @@ public class DayOverview extends Activity {
         int returnDate = 0;
         int returnBegins = 0;
 
-        String selectSQL = "SELECT activity, date, begins, notes, ends, location FROM calendar WHERE username = " + "'" + user + "'" + " and date = " + dateInteger;
+        String selectSQL = "SELECT id, activity, date, begins, notes, ends, location FROM calendar WHERE username = " + "'" + user + "'" + " and date = " + dateInteger;
         Log.d("hej", "test2");
         try {
             dbConnection = getDBConnection();
@@ -124,6 +154,7 @@ public class DayOverview extends Activity {
                 locationFromDB = rs.getString("location");
                 notesFromDB = rs.getString("notes");
                 activityFromDB = rs.getString("activity");
+                idFromDB = rs.getInt("id");
                 Log.d("hej", "test5" + dateFromDB);
 
             }
@@ -140,17 +171,96 @@ public class DayOverview extends Activity {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println(e);
         }
 
         try {
             dbConnection = DriverManager.getConnection(
                     "jdbc:mysql://89.160.102.7:3306/projekt" + "?user=" + "ruut"
                             + "&password=" + "rooot");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            return dbConnection;
+        } catch (Exception e) {
+            System.out.println(e);
         }
         return dbConnection;
+
     }
+
+    public Statement getSt() {
+        return this.st;
+    }
+
+    public void setSt(Statement st) {
+        this.st = st;
+    }
+
+
+
+    private class deleteAsync extends AsyncTask<Object, Object, Cursor> {
+
+        @Override
+        protected Cursor doInBackground(Object... params) {
+
+            try {
+                deleteFromDB();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+
+        private void deleteFromDB() throws SQLException {
+
+            Log.d("Delete", "delete");
+
+            Connection dbConnection;
+            String returnValue = null;
+
+
+            try {
+                Log.e("ID", "id" + idFromDB);
+                String deleteSQL = "DELETE from Calendar WHERE ID = ?";
+                PreparedStatement preparedStatement = getDBConnection().prepareStatement(deleteSQL);
+                preparedStatement.setInt(1, idFromDB);
+                preparedStatement.executeUpdate();
+
+                getDBConnection().close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+
+
+
+        }
+
+
+
+        private Connection getDBConnection() {
+
+            Connection dbConnection = null;
+
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+            try {
+                dbConnection = DriverManager.getConnection(
+                        "jdbc:mysql://89.160.102.7:3306/projekt" + "?user=" + "ruut"
+                                + "&password=" + "rooot");
+                return dbConnection;
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            return dbConnection;
+        }
+    }
+
+
+
+
+
 }
