@@ -26,14 +26,9 @@ public class EditEvent extends ActionBarActivity {
     TimePicker myTimePicker;
     DatePicker myDatePicker;
     Button button;
-    EditText edActivity;
-    EditText edNotes;
-    int hour;
-    int minute;
-    int time;
-    private static String hourMinute;
-    private static String act;
-    private static String note;
+    EditText edActivity, edNotes;
+    int hour, minute, time;
+    private static String hourMinute, act, note;
     private Statement state;
     public String user;
     public int beginning;
@@ -48,8 +43,6 @@ public class EditEvent extends ActionBarActivity {
             user = myBundle.getString("user");
             beginning = myBundle.getInt("begins");
         }
-
-
         myTimePicker = (TimePicker) findViewById(R.id.timePicker);
         myDatePicker = (DatePicker) findViewById(R.id.datePicker);
         button = (Button) findViewById(R.id.saveButton);
@@ -59,7 +52,6 @@ public class EditEvent extends ActionBarActivity {
 
         setupAsync setA = new setupAsync();
         setA.execute(getApplicationContext());
-
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,26 +63,20 @@ public class EditEvent extends ActionBarActivity {
                 act = edActivity.getText().toString();
                 note = edNotes.getText().toString();
 
-
                 EditAsync ea = new EditAsync();
                 ea.execute(getApplicationContext());
-
-
             }
         });
-
     }
 
     private class setupAsync extends AsyncTask<Object, Object, Cursor> {
 
         @Override
         protected Cursor doInBackground(Object... params) {
-
             id = setupValues();
-            System.out.println("ID = "+ id);
+            System.out.println("ID = " + id);
             return null;
         }
-
 
         private int setupValues() {
 
@@ -136,7 +122,7 @@ public class EditEvent extends ActionBarActivity {
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
-            System.out.println("returnValue = "+ returnValue);
+            System.out.println("returnValue = " + returnValue);
             return returnValue;
         }
 
@@ -178,20 +164,16 @@ public class EditEvent extends ActionBarActivity {
 
             Connection dbConnection;
 
-            System.out.println("updateDB ID = "+ id);
+            System.out.println("updateDB ID = " + id);
 
             String updateTableSQL = "UPDATE calendar "
                     + "SET activity = " + "'" + act + "'" + "," + " notes = " + "'" + note + "'" + "," + " begins = " + hour
                     + " WHERE id = " + id;
 
             try {
-                Log.d("test", "1");
                 dbConnection = getDBConnection();
-                Log.d("test", "1");
                 setStatement(dbConnection.createStatement());
-                Log.d("test", "1");
                 getStatement().executeUpdate(updateTableSQL);
-                Log.d("test", "1");
 
 
             } catch (SQLException e) {

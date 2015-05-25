@@ -31,19 +31,14 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
     private static final String tag = "MyCalendarActivity";
 
     private TextView currentMonth;
-    private Button selectedDayMonthYearButton;
     private ImageView prevMonth;
     private ImageView nextMonth;
     private GridView calendarView;
     private GridCellAdapter adapter;
     private Calendar _calendar;
     private int month, year;
-    private final DateFormat dateFormatter = new DateFormat();
     private static final String dateTemplate = "MMMM yyyy";
-    private static String yearToAddToEvent;
-    private static String monthToAddToEvent;
-    private static String dayToAddToEvent;
-    private static String currentMonthName;
+    private static String yearToAddToEvent, monthToAddToEvent, dayToAddToEvent, currentMonthName;
     private static boolean colorSet = false;
     public static String date;
     public static int dateInInteger;

@@ -26,14 +26,9 @@ public class AddEvent extends ActionBarActivity{
     TimePicker myTimePicker;
     DatePicker myDatePicker;
     Button button;
-    EditText edActivity;
-    EditText edNotes;
-    int hour;
-    int minute;
-    int time;
-    private static String hourMinute;
-    private static String act;
-    private static String note;
+    EditText edActivity, edNotes;
+    int hour, minute, time;
+    private static String hourMinute, act, note;
     private Statement state;
     public String user;
 
@@ -45,14 +40,12 @@ public class AddEvent extends ActionBarActivity{
         if (myBundle != null) {
             user = myBundle.getString("user");
         }
-
         myTimePicker = (TimePicker)findViewById(R.id.timePicker);
         myDatePicker = (DatePicker)findViewById(R.id.datePicker);
         button = (Button)findViewById(R.id.saveButton);
         edActivity = (EditText)findViewById(R.id.activity);
         edNotes = (EditText)findViewById(R.id.notes);
         myTimePicker.setIs24HourView(true);
-
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,14 +61,12 @@ public class AddEvent extends ActionBarActivity{
                 editA.execute(getApplicationContext());
             }
         });
-
     }
 
     private class AddAsync extends AsyncTask<Object, Object, Cursor> {
 
         @Override
         protected Cursor doInBackground(Object... params) {
-
             try {
                 storeInDB();
             } catch (SQLException e) {
@@ -83,10 +74,6 @@ public class AddEvent extends ActionBarActivity{
             }
             return null;
         }
-
-
-
-
 
         private String storeInDB() throws SQLException {
 
@@ -99,15 +86,9 @@ public class AddEvent extends ActionBarActivity{
                     + "(" + id +"," + "'"+user+"'"+","+ "'"+act+"'"+","+ "'"+note+"'"+","+hour+","+ "16"+"," +"'"+"malmo"+"'"+","+ "2015525"+")";
 
             try {
-                Log.d("test", "1");
                 dbConnection = getDBConnection();
-                Log.d("test", "1");
                 setStatement(dbConnection.createStatement());
-                Log.d("test", "1");
                 getStatement().executeUpdate(insertTableSQL);
-                Log.d("test", "1");
-
-
 
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -146,15 +127,14 @@ public class AddEvent extends ActionBarActivity{
             Connection dbConnection = null;
 
             try {
-                Class.forName("com.mysql.jdbc.Driver");
+                Class.forName(DB_DRIVER);
             } catch (ClassNotFoundException e) {
                 System.out.println(e.getMessage());
             }
 
             try {
                 dbConnection = DriverManager.getConnection(
-                        "jdbc:mysql://89.160.102.7:3306/projekt" + "?user=" + "ruut"
-                + "&password=" + "rooot");
+                        DB_CONNECTION, DB_USER, DB_PASSWORD);
                 return dbConnection;
             } catch (SQLException e) {
                 System.out.println(e.getMessage());

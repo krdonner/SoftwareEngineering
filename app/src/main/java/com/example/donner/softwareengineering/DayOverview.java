@@ -23,23 +23,17 @@ import java.sql.Statement;
 
 public class DayOverview extends Activity {
 
+    final String DB_DRIVER = "com.mysql.jdbc.Driver";
+    final String DB_CONNECTION = "jdbc:mysql://89.160.102.7:3306/projekt";
+    final String DB_USER = "ruut";
+    final String DB_PASSWORD = "rooot";
     ListView listView;
-    String date;
-    String theDay;
+    String date, theDay;
     int dateInteger;
-    static int theDayInteger;
-    static int dateFromDB;
-    static int beginsFromDB;
-    static String notesFromDB;
-    static int endsFromDB;
-    static String locationFromDB;
-    static String activityFromDB;
-    static int idFromDB;
+    static int theDayInteger, dateFromDB, beginsFromDB, endsFromDB, idFromDB;
+    static String notesFromDB, locationFromDB, activityFromDB;
     String[] values;
-    private Statement state;
-    static ResultSet rs;
     public String user;
-    private Statement st;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +59,6 @@ public class DayOverview extends Activity {
 
 
     private class DayOverviewAsync extends AsyncTask<Object, Object, Cursor> {
-
         @Override
         protected Cursor doInBackground(Object... params) {
 
@@ -116,18 +109,12 @@ public class DayOverview extends Activity {
 
                                     Intent intent = new Intent(DayOverview.this, MyCalendarActivity.class);
                                     startActivity(intent);
-
                                 }
                             });
                     AlertDialog alert = builder.create();
                     alert.show();
-
-
                 }
-
             });
-
-
         }
     }
 
@@ -156,7 +143,6 @@ public class DayOverview extends Activity {
                 activityFromDB = rs.getString("activity");
                 idFromDB = rs.getInt("id");
                 Log.d("hej", "test5" + dateFromDB);
-
             }
             dbConnection.close();
         } catch (SQLException e) {
@@ -184,18 +170,7 @@ public class DayOverview extends Activity {
             System.out.println(e);
         }
         return dbConnection;
-
     }
-
-    public Statement getSt() {
-        return this.st;
-    }
-
-    public void setSt(Statement st) {
-        this.st = st;
-    }
-
-
 
     private class deleteAsync extends AsyncTask<Object, Object, Cursor> {
 
@@ -210,14 +185,9 @@ public class DayOverview extends Activity {
             return null;
         }
 
-
         private void deleteFromDB() throws SQLException {
 
             Log.d("Delete", "delete");
-
-            Connection dbConnection;
-            String returnValue = null;
-
 
             try {
                 Log.e("ID", "id" + idFromDB);
@@ -230,37 +200,26 @@ public class DayOverview extends Activity {
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
-
-
-
         }
-
-
 
         private Connection getDBConnection() {
 
             Connection dbConnection = null;
 
             try {
-                Class.forName("com.mysql.jdbc.Driver");
-            } catch (Exception e) {
-                System.out.println(e);
+                Class.forName(DB_DRIVER);
+            } catch (ClassNotFoundException e) {
+                System.out.println(e.getMessage());
             }
 
             try {
                 dbConnection = DriverManager.getConnection(
-                        "jdbc:mysql://89.160.102.7:3306/projekt" + "?user=" + "ruut"
-                                + "&password=" + "rooot");
+                        DB_CONNECTION, DB_USER, DB_PASSWORD);
                 return dbConnection;
-            } catch (Exception e) {
-                System.out.println(e);
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
             }
             return dbConnection;
         }
     }
-
-
-
-
-
 }
