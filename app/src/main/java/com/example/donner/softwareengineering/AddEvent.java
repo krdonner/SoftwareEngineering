@@ -1,5 +1,6 @@
 package com.example.donner.softwareengineering;
 
+import android.app.Activity;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,20 +18,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class AddEvent extends ActionBarActivity{
+public class AddEvent extends Activity {
 
     final String DB_DRIVER = "com.mysql.jdbc.Driver";
     final String DB_CONNECTION = "jdbc:mysql://89.160.102.7:3306/projekt";
     final String DB_USER = "ruut";
     final String DB_PASSWORD = "rooot";
+    public static String date;
     TimePicker myTimePicker;
-    DatePicker myDatePicker;
     Button button;
     EditText edActivity, edNotes;
-    int hour, minute, time;
+    String startString, endString;
+    int hour, minute, time, starts, ends;
     private static String hourMinute, act, note;
     private Statement state;
     public String user;
+    String location;
+    EditText edLocation;
+    EditText edStarts;
+    EditText edEnds;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,23 +45,26 @@ public class AddEvent extends ActionBarActivity{
         Bundle myBundle = getIntent().getExtras();
         if (myBundle != null) {
             user = myBundle.getString("user");
+            date = myBundle.getString("date");
         }
-        myTimePicker = (TimePicker)findViewById(R.id.timePicker);
-        myDatePicker = (DatePicker)findViewById(R.id.datePicker);
+
         button = (Button)findViewById(R.id.saveButton);
         edActivity = (EditText)findViewById(R.id.activity);
         edNotes = (EditText)findViewById(R.id.notes);
-        myTimePicker.setIs24HourView(true);
+        edStarts = (EditText)findViewById(R.id.textStart);
+        edEnds = (EditText)findViewById(R.id.textEnd);
+        edLocation = (EditText)findViewById(R.id.location);
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                hour = myTimePicker.getCurrentHour();
-                minute = myTimePicker.getCurrentMinute();
-                hourMinute = Integer.toString(hour)+Integer.toString(minute);
-                time = Integer.parseInt(hourMinute);
+
+                starts = Integer.parseInt(edStarts.getText().toString());
+                ends = Integer.parseInt(edEnds.getText().toString());
                 act = edActivity.getText().toString();
                 note = edNotes.getText().toString();
+                location = edLocation.getText().toString();
 
                 AddAsync editA = new AddAsync();
                 editA.execute(getApplicationContext());
@@ -83,7 +92,7 @@ public class AddEvent extends ActionBarActivity{
 
             String insertTableSQL = "INSERT INTO calendar"
                     + "(id, username, activity, notes, begins, ends, location, date) VALUES"
-                    + "(" + id +"," + "'"+user+"'"+","+ "'"+act+"'"+","+ "'"+note+"'"+","+hour+","+ "16"+"," +"'"+"malmo"+"'"+","+ "2015525"+")";
+                    + "(" + id +"," + "'"+user+"'"+","+ "'"+act+"'"+","+ "'"+note+"'"+","+starts+","+ends+"," +"'"+location+"'"+","+date+")";
 
             try {
                 dbConnection = getDBConnection();

@@ -29,7 +29,7 @@
             android:layout_weight="0.6"
             android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#FFFFFF"></TextView>
+            android:textColor="#000000"></TextView>
 
         <ImageView
             android:id="@+id/nextMonth"
@@ -43,10 +43,17 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/calendar_days_two"/>
+
 
     </LinearLayout>
+
 
     <GridView
         android:id="@+id/calendar"

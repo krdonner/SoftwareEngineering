@@ -123,7 +123,6 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
 
     @Override
     public void onDestroy() {
-        Log.d(tag, "Destroying View ...");
         super.onDestroy();
     }
 
@@ -240,8 +239,6 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
             }
 
             for (int i = 1; i <= daysInMonth; i++) {
-                Log.d(currentMonthName, String.valueOf(i) + " "
-                        + getMonthAsString(currentMonth) + " " + yy);
                 if (i == getCurrentDayOfMonth()) {
                     list.add(String.valueOf(i) + "-BLUE" + "-"
                             + getMonthAsString(currentMonth) + "-" + yy);
@@ -340,10 +337,41 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
                 @Override
                 public void onClick(View view) {
                     long dayInInteger = getItemId(position);
+                    yearToAddToEvent = Integer.toString(year);
+                    if (currentMonthName.equals("Januari")) {
+                        monthToAddToEvent = "1";
+                    } else if (currentMonthName.equals("Februari")) {
+                        monthToAddToEvent = "2";
+                    } else if (currentMonthName.equals("Mars")) {
+                        monthToAddToEvent = "3";
+                    } else if (currentMonthName.equals("April")) {
+                        monthToAddToEvent = "4";
+                    } else if (currentMonthName.equals("Maj")) {
+                        monthToAddToEvent = "5";
+                    } else if (currentMonthName.equals("Juni")) {
+                        monthToAddToEvent = "6";
+                    } else if (currentMonthName.equals("Juli")) {
+                        monthToAddToEvent = "7";
+                    } else if (currentMonthName.equals("Augusti")) {
+                        monthToAddToEvent = "8";
+                    } else if (currentMonthName.equals("September")) {
+                        monthToAddToEvent = "9";
+                    } else if (currentMonthName.equals("Oktober")) {
+                        monthToAddToEvent = "10";
+                    } else if (currentMonthName.equals("November")) {
+                        monthToAddToEvent = "11";
+                    } else if (currentMonthName.equals("December")) {
+                        monthToAddToEvent = "12";
+                    }
+                    dayToAddToEvent = theday;
+
+                    date = yearToAddToEvent + monthToAddToEvent + dayToAddToEvent;
                     getCurrentDayOfMonth();
                     Toast.makeText(getApplicationContext(), yearToAddToEvent + monthToAddToEvent + dayToAddToEvent, Toast.LENGTH_LONG).show();
+                    Log.e("dateeee", "" + date);
 
                     Intent intent = new Intent(MyCalendarActivity.this, AddEvent.class);
+                    intent.putExtra("date", date);
                     intent.putExtra("user", user);
                     startActivity(intent);
                 }

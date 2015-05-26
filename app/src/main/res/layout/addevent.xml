@@ -1,61 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1">
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="47dp"
-        android:text="Enter activity"
-        android:id="@+id/textView5"
-        android:textSize="30dp" />
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:id="@+id/Start"
+        android:textSize="30dp"
+        android:layout_marginTop="43dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/saveButton"
+        android:layout_alignStart="@+id/saveButton" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="End"
+        android:id="@+id/textView9"
+        android:textSize="30dp"
+        android:layout_marginRight="91dp"
+        android:layout_marginEnd="91dp"
+        android:layout_alignTop="@+id/Start"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/activity" />
-
-    <TextView
-        android:layout_width="175dp"
-        android:layout_height="wrap_content"
-        android:text="Enter notes"
-        android:id="@+id/textView6"
-        android:textSize="30dp" />
+        android:id="@+id/textStart"
+        android:layout_below="@+id/Start"
+        android:layout_alignRight="@+id/Start"
+        android:layout_alignEnd="@+id/Start"
+        android:layout_alignLeft="@+id/Start"
+        android:layout_alignStart="@+id/Start"
+        android:text="hh" />
 
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/notes" />
+        android:id="@+id/textEnd"
+        android:layout_alignTop="@+id/textStart"
+        android:layout_alignLeft="@+id/textView9"
+        android:layout_alignStart="@+id/textView9"
+        android:layout_alignRight="@+id/textView9"
+        android:layout_alignEnd="@+id/textView9"
+        android:text="hh" />
 
-    <TextView
-        android:layout_width="152dp"
-        android:layout_height="wrap_content"
-        android:text="Enter time"
-        android:id="@+id/textView7"
-        android:textSize="30dp" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:id="@+id/activity"
+        android:text="    Activity"
+        android:background="@drawable/edittext"
+        android:layout_below="@+id/textStart"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
-    <TimePicker
-        android:layout_width="170dp"
-        android:layout_height="60dp"
-        android:id="@+id/timePicker" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:id="@+id/notes"
+        android:text="    Notes"
+        android:background="@drawable/edittext"
+        android:layout_below="@+id/activity"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
-    <TextView
-        android:layout_width="145dp"
-        android:layout_height="wrap_content"
-        android:text="Date"
-        android:id="@+id/textView8"
-        android:textSize="30dp" />
-
-    <DatePicker
-        android:layout_width="170dp"
-        android:layout_height="60dp"
-        android:id="@+id/datePicker" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:id="@+id/location"
+        android:layout_below="@+id/notes"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edittext"
+        android:text="    Location"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="OK"
-        android:id="@+id/saveButton" />
-
-</LinearLayout>
+        android:text="Save activity"
+        android:id="@+id/saveButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button"/>
+</RelativeLayout>

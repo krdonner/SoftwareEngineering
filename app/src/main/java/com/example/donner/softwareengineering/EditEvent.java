@@ -1,5 +1,6 @@
 package com.example.donner.softwareengineering;
 
+import android.app.Activity;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,7 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class EditEvent extends ActionBarActivity {
+public class EditEvent extends Activity {
 
     final String DB_DRIVER = "com.mysql.jdbc.Driver";
     final String DB_CONNECTION = "jdbc:mysql://89.160.102.7:3306/projekt";
