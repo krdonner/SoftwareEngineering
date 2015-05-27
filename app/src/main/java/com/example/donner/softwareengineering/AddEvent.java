@@ -4,13 +4,9 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TimePicker;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,19 +20,16 @@ public class AddEvent extends Activity {
     final String DB_CONNECTION = "jdbc:mysql://89.160.102.7:3306/projekt";
     final String DB_USER = "ruut";
     final String DB_PASSWORD = "rooot";
+
     public static String date;
-    TimePicker myTimePicker;
     Button button;
     EditText edActivity, edNotes;
-    String startString, endString;
-    int hour, minute, time, starts, ends;
-    private static String hourMinute, act, note;
+    int starts, ends;
+    private static String act, note;
     private Statement state;
     public String user;
     String location;
-    EditText edLocation;
-    EditText edStarts;
-    EditText edEnds;
+    EditText edLocation, edStarts, edEnds;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +48,6 @@ public class AddEvent extends Activity {
         edEnds = (EditText)findViewById(R.id.textEnd);
         edLocation = (EditText)findViewById(R.id.location);
 
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,8 +58,8 @@ public class AddEvent extends Activity {
                 note = edNotes.getText().toString();
                 location = edLocation.getText().toString();
 
-                AddAsync editA = new AddAsync();
-                editA.execute(getApplicationContext());
+                AddAsync aa = new AddAsync();
+                aa.execute(getApplicationContext());
             }
         });
     }
@@ -76,19 +68,16 @@ public class AddEvent extends Activity {
 
         @Override
         protected Cursor doInBackground(Object... params) {
-            try {
-                storeInDB();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            storeInDB();
             return null;
         }
 
-        private String storeInDB() throws SQLException {
+        private String storeInDB() {
 
             Connection dbConnection;
             String returnValue = null;
-            int id = getEventID();
+            int id = 0;
+            id = getEventID();
 
             String insertTableSQL = "INSERT INTO calendar"
                     + "(id, username, activity, notes, begins, ends, location, date) VALUES"
@@ -100,12 +89,12 @@ public class AddEvent extends Activity {
                 getStatement().executeUpdate(insertTableSQL);
 
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
             return returnValue;
         }
 
-        private int getEventID() throws SQLException {
+        private int getEventID() {
 
             Connection dbConnection;
             int returnValue = 0;
@@ -120,13 +109,12 @@ public class AddEvent extends Activity {
 
                 while (rs.next()) {
                     returnValue = rs.getInt("id");
-                    System.out.println(returnValue);
                 }
                 rs.close();
                 st.close();
                 dbConnection.close();
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
             return returnValue+1;
         }
@@ -138,7 +126,7 @@ public class AddEvent extends Activity {
             try {
                 Class.forName(DB_DRIVER);
             } catch (ClassNotFoundException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
 
             try {
@@ -146,7 +134,7 @@ public class AddEvent extends Activity {
                         DB_CONNECTION, DB_USER, DB_PASSWORD);
                 return dbConnection;
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
             return dbConnection;
         }

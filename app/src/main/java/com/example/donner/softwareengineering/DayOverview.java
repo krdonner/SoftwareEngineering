@@ -9,12 +9,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -29,6 +27,7 @@ public class DayOverview extends Activity {
     final String DB_CONNECTION = "jdbc:mysql://89.160.102.7:3306/projekt";
     final String DB_USER = "ruut";
     final String DB_PASSWORD = "rooot";
+
     ListView listView;
     String date, theDay;
     int dateInteger;
@@ -60,11 +59,9 @@ public class DayOverview extends Activity {
 
     }
 
-
     private class DayOverviewAsync extends AsyncTask<Object, Object, Cursor> {
         @Override
         protected Cursor doInBackground(Object... params) {
-
             try {
                 getDate();
             } catch (SQLException e) {
@@ -76,11 +73,10 @@ public class DayOverview extends Activity {
         @Override
         protected void onPostExecute(Cursor cursor) {
             super.onPostExecute(cursor);
-            Log.e("testar", dateInteger + " " + dateFromDB);
 
             if (dateInteger == dateFromDB) {
-                values[beginsFromDB] += "\n"+"Activity: " + activityFromDB + " \n" + "Location: " + locationFromDB + "\n"
-                        +"Notes: "+  notesFromDB + "\n" + "Ends: " + endsFromDB;
+                values[beginsFromDB] += "\n" + "Activity: " + activityFromDB + " \n" + "Location: " + locationFromDB + "\n"
+                        + "Notes: " + notesFromDB + "\n" + "Ends: " + endsFromDB;
             }
 
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
@@ -113,8 +109,8 @@ public class DayOverview extends Activity {
 
                                     Intent mStartActivity = new Intent(DayOverview.this, Main.class);
                                     int mPendingIntentId = 123456;
-                                    PendingIntent mPendingIntent = PendingIntent.getActivity(DayOverview.this, mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
-                                    AlarmManager mgr = (AlarmManager)DayOverview.this.getSystemService(DayOverview.this.ALARM_SERVICE);
+                                    PendingIntent mPendingIntent = PendingIntent.getActivity(DayOverview.this, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+                                    AlarmManager mgr = (AlarmManager) DayOverview.this.getSystemService(DayOverview.this.ALARM_SERVICE);
                                     mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
                                     System.exit(0);
                                 }
@@ -126,23 +122,18 @@ public class DayOverview extends Activity {
         }
     }
 
-
     private int getDate() throws SQLException {
-        Log.d("hej", "test1");
         Connection dbConnection;
         int returnDate = 0;
         int returnBegins = 0;
 
         String selectSQL = "SELECT id, activity, date, begins, notes, ends, location FROM calendar WHERE username = " + "'" + user + "'" + " and date = " + dateInteger;
-        Log.d("hej", "test2");
         try {
             dbConnection = getDBConnection();
             Statement st = dbConnection.createStatement();
 
             ResultSet rs = st.executeQuery(selectSQL);
-            Log.d("hej", "test3");
             while (rs.next()) {
-                Log.d("hej", "test4");
                 dateFromDB = rs.getInt("date");
                 beginsFromDB = rs.getInt("begins");
                 endsFromDB = rs.getInt("ends");
@@ -150,7 +141,6 @@ public class DayOverview extends Activity {
                 notesFromDB = rs.getString("notes");
                 activityFromDB = rs.getString("activity");
                 idFromDB = rs.getInt("id");
-                Log.d("hej", "test5" + dateFromDB);
             }
             dbConnection.close();
         } catch (SQLException e) {
@@ -194,11 +184,7 @@ public class DayOverview extends Activity {
         }
 
         private void deleteFromDB() throws SQLException {
-
-            Log.d("Delete", "delete");
-
             try {
-                Log.e("ID", "id" + idFromDB);
                 String deleteSQL = "DELETE from Calendar WHERE ID = ?";
                 PreparedStatement preparedStatement = getDBConnection().prepareStatement(deleteSQL);
                 preparedStatement.setInt(1, idFromDB);
@@ -217,7 +203,7 @@ public class DayOverview extends Activity {
             try {
                 Class.forName(DB_DRIVER);
             } catch (ClassNotFoundException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
 
             try {
@@ -225,7 +211,7 @@ public class DayOverview extends Activity {
                         DB_CONNECTION, DB_USER, DB_PASSWORD);
                 return dbConnection;
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
             return dbConnection;
         }

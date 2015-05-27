@@ -4,13 +4,9 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TimePicker;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,19 +20,16 @@ public class EditEvent extends Activity {
     final String DB_CONNECTION = "jdbc:mysql://89.160.102.7:3306/projekt";
     final String DB_USER = "ruut";
     final String DB_PASSWORD = "rooot";
-    TimePicker myTimePicker;
-    DatePicker myDatePicker;
+
     Button button;
     EditText edActivity, edNotes;
-    int hour, minute, time, starts, ends;
-    private static String hourMinute, act, note;
+    int starts, ends;
+    private static String act, note;
     private Statement state;
     public String user, location;
     public int beginning;
     public static int id;
-    private EditText edStarts;
-    private EditText edEnds;
-    private EditText edLocation;
+    private EditText edStarts, edEnds, edLocation;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,12 +40,12 @@ public class EditEvent extends Activity {
             user = myBundle.getString("user");
             beginning = myBundle.getInt("begins");
         }
-        button = (Button)findViewById(R.id.saveButton);
-        edActivity = (EditText)findViewById(R.id.activity);
-        edNotes = (EditText)findViewById(R.id.notes);
-        edStarts = (EditText)findViewById(R.id.textStart);
-        edEnds = (EditText)findViewById(R.id.textEnd);
-        edLocation = (EditText)findViewById(R.id.location);
+        button = (Button) findViewById(R.id.saveButton);
+        edActivity = (EditText) findViewById(R.id.activity);
+        edNotes = (EditText) findViewById(R.id.notes);
+        edStarts = (EditText) findViewById(R.id.textStart);
+        edEnds = (EditText) findViewById(R.id.textEnd);
+        edLocation = (EditText) findViewById(R.id.location);
 
         setupAsync setA = new setupAsync();
         setA.execute(getApplicationContext());
@@ -89,7 +82,7 @@ public class EditEvent extends Activity {
             int begins, ends;
             String activity, notes, location;
 
-            String idSQL = "SELECT id, activity, notes, begins, ends, location FROM calendar WHERE userName = " + "'" + user + "'" + " and begins = " + "'" + beginning + "'"; //WORK IN PROGRESS
+            String idSQL = "SELECT id, activity, notes, begins, ends, location FROM calendar WHERE userName = " + "'" + user + "'" + " and begins = " + "'" + beginning + "'";
 
             try {
                 dbConnection = getDBConnection();
@@ -99,14 +92,10 @@ public class EditEvent extends Activity {
 
                 while (rs.next()) {
                     identification = rs.getInt("id");
-                    System.out.println(identification);
                     returnValue = identification;
                     activity = rs.getString("activity");
-                    System.out.println(activity);
                     notes = rs.getString("notes");
-                    System.out.println(notes);
                     begins = rs.getInt("begins");
-                    System.out.println(begins);
                     ends = rs.getInt("ends");
                     location = rs.getString("location");
 
@@ -130,7 +119,7 @@ public class EditEvent extends Activity {
                 st.close();
                 dbConnection.close();
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
             System.out.println("returnValue = " + returnValue);
             return returnValue;
@@ -143,7 +132,7 @@ public class EditEvent extends Activity {
             try {
                 Class.forName(DB_DRIVER);
             } catch (ClassNotFoundException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
 
             try {
@@ -151,7 +140,7 @@ public class EditEvent extends Activity {
                         DB_CONNECTION, DB_USER, DB_PASSWORD);
                 return dbConnection;
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
             return dbConnection;
         }
@@ -162,15 +151,11 @@ public class EditEvent extends Activity {
         @Override
         protected Cursor doInBackground(Object... params) {
 
-            try {
-                updateDB();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            updateDB();
             return null;
         }
 
-        private void updateDB() throws SQLException {
+        private void updateDB() {
 
             Connection dbConnection;
 
@@ -184,10 +169,8 @@ public class EditEvent extends Activity {
                 dbConnection = getDBConnection();
                 setStatement(dbConnection.createStatement());
                 getStatement().executeUpdate(updateTableSQL);
-
-
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
         }
 
@@ -198,7 +181,7 @@ public class EditEvent extends Activity {
             try {
                 Class.forName(DB_DRIVER);
             } catch (ClassNotFoundException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
 
             try {
@@ -206,7 +189,7 @@ public class EditEvent extends Activity {
                         DB_CONNECTION, DB_USER, DB_PASSWORD);
                 return dbConnection;
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
             return dbConnection;
         }

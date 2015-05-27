@@ -22,6 +22,7 @@ public class Main extends Activity {
     final String DB_CONNECTION = "jdbc:mysql://89.160.102.7:3306/projekt";
     final String DB_USER = "ruut";
     final String DB_PASSWORD = "rooot";
+
     public ArrayList<Integer> dates = new ArrayList<Integer>();
 
     private static EditText username;
@@ -40,8 +41,6 @@ public class Main extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        // getActionBar().hide();
-
         setUsername((EditText) findViewById(R.id.username));
         password = (EditText) findViewById(R.id.password);
     }
@@ -56,8 +55,8 @@ public class Main extends Activity {
             getUsername().getText().clear();
             password.getText().clear();
         } else {
-            LoginAsync l = new LoginAsync(getUsername().getText().toString(), password.getText().toString());
-            l.execute(getApplicationContext());
+            LoginAsync la = new LoginAsync(getUsername().getText().toString(), password.getText().toString());
+            la.execute(getApplicationContext());
         }
     }
 
@@ -73,17 +72,10 @@ public class Main extends Activity {
 
         @Override
         protected Cursor doInBackground(Object... params) {
-
-            try {
-                getDates();
-                String un = doesUsernameExist();
-                System.out.println("un = " + un);
-                String pw = getRelatedPassword();
-                System.out.println("pw = " + pw);
-                handleLogin(un, pw);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            getDates();
+            String un = doesUsernameExist();
+            String pw = getRelatedPassword();
+            handleLogin(un, pw);
             return null;
         }
 
@@ -93,12 +85,10 @@ public class Main extends Activity {
             String p = passw;
 
             if (user.equals(u) && pass.equals(p)) {
-                System.out.println("Logging in!");
                 Intent intent = new Intent(Main.this, MyCalendar.class);
                 intent.putExtra("dates", dates);
                 intent.putExtra("user", user);
                 startActivity(intent);
-
             } else if (!user.equals(u) || !pass.equals(p)) {
                 runOnUiThread(new Runnable() {
                     @Override
@@ -111,7 +101,7 @@ public class Main extends Activity {
             }
         }
 
-        private String doesUsernameExist() throws SQLException {
+        private String doesUsernameExist() {
 
             Connection dbConnection;
             String returnValue = null;
@@ -126,18 +116,17 @@ public class Main extends Activity {
 
                 while (rs.next()) {
                     returnValue = rs.getString("Username");
-                    System.out.println(returnValue);
                 }
                 rs.close();
                 st.close();
                 dbConnection.close();
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
             return returnValue;
         }
 
-        private String getDates() throws SQLException {
+        private String getDates() {
 
             Connection dbConnection;
             String returnValue = null;
@@ -153,14 +142,16 @@ public class Main extends Activity {
                 while (rs.next()) {
                     dates.add(rs.getInt("date"));
                 }
+                rs.close();
+                st.close();
                 dbConnection.close();
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
             return returnValue;
         }
 
-        private String getRelatedPassword() throws SQLException {
+        private String getRelatedPassword() {
 
             Connection dbConnection;
             String returnValue = null;
@@ -181,7 +172,7 @@ public class Main extends Activity {
                 st.close();
                 dbConnection.close();
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
             return returnValue;
         }
@@ -193,7 +184,7 @@ public class Main extends Activity {
             try {
                 Class.forName(DB_DRIVER);
             } catch (ClassNotFoundException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
 
             try {
@@ -201,7 +192,7 @@ public class Main extends Activity {
                         DB_CONNECTION, DB_USER, DB_PASSWORD);
                 return dbConnection;
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
             return dbConnection;
         }

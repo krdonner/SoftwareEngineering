@@ -17,25 +17,24 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Register extends Activity {
-    EditText username, password, passwordRepeat;
-    Button registerUser;
 
     final String DB_DRIVER = "com.mysql.jdbc.Driver";
     final String DB_CONNECTION = "jdbc:mysql://89.160.102.7:3306/projekt";
     final String DB_USER = "ruut";
     final String DB_PASSWORD = "rooot";
 
+    EditText username, password, passwordRepeat;
+    Button registerUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
-        // getActionBar().hide();
 
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         passwordRepeat = (EditText) findViewById(R.id.passwordRepeat);
         registerUser = (Button) findViewById(R.id.registerButton);
-
     }
 
     public void registerClicked(View v) {
@@ -59,14 +58,35 @@ public class Register extends Activity {
 
         @Override
         protected Cursor doInBackground(Object... params) {
+            String un = doesUsernameExist();
+            handleUserRegistration(un);
+            return null;
+        }
+
+        private String doesUsernameExist() {
+
+            Connection dbConnection;
+            String returnValue = null;
+
+            String selectSQL = "SELECT username FROM user WHERE username = " + "'" + username.getText().toString() + "'";
 
             try {
-                String un = doesUsernameExist();
-                handleUserRegistration(un);
+                dbConnection = getDBConnection();
+                Statement st = dbConnection.createStatement();
+
+                ResultSet rs = st.executeQuery(selectSQL);
+
+                while (rs.next()) {
+                    returnValue = rs.getString("Username");
+                    System.out.println(returnValue);
+                }
+                rs.close();
+                st.close();
+                dbConnection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println(e);
             }
-            return null;
+            return returnValue;
         }
 
         private void handleUserRegistration(String uname) {
@@ -88,40 +108,14 @@ public class Register extends Activity {
                 });
             } else if (!user.equals(u)) {
                 try {
-                    insertRecordIntoTable();
+                    insertIntoDatabase();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    System.out.println(e);
                 }
             }
         }
 
-        private String doesUsernameExist() throws SQLException {
-
-            Connection dbConnection;
-            String returnValue = null;
-
-            String selectSQL = "SELECT username FROM user WHERE username = " + "'" + username.getText().toString() + "'";
-
-            try {
-                dbConnection = getDBConnection();
-                Statement st = dbConnection.createStatement();
-
-                ResultSet rs = st.executeQuery(selectSQL);
-
-                while (rs.next()) {
-                    returnValue = rs.getString("Username");
-                    System.out.println(returnValue);
-                }
-                rs.close();
-                st.close();
-                dbConnection.close();
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
-            return returnValue;
-        }
-
-        private void insertRecordIntoTable() throws SQLException {
+        private void insertIntoDatabase() throws SQLException {
 
             Connection dbConnection = null;
             PreparedStatement preparedStatement = null;
@@ -138,19 +132,12 @@ public class Register extends Activity {
                 preparedStatement.setString(2, password.getText().toString());
 
                 preparedStatement.executeUpdate();
-
-                System.out.println("Record is inserted into USER table!");
-
             } catch (SQLException e) {
-
-                System.out.println(e.getMessage());
-
+                System.out.println(e);
             } finally {
-
                 if (preparedStatement != null) {
                     preparedStatement.close();
                 }
-
                 if (dbConnection != null) {
                     dbConnection.close();
                 }
@@ -164,14 +151,14 @@ public class Register extends Activity {
             try {
                 Class.forName(DB_DRIVER);
             } catch (ClassNotFoundException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
             try {
                 dbConnection = DriverManager.getConnection(
                         DB_CONNECTION, DB_USER, DB_PASSWORD);
                 return dbConnection;
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
             return dbConnection;
         }

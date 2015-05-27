@@ -24,7 +24,6 @@
         <activity android:name=".DayOverview"/>
         <activity android:name=".AddEvent"/>
         <activity android:name=".EditEvent"/>
-        <activity android:name=".Event"/>
     </application>
 
 </manifest>

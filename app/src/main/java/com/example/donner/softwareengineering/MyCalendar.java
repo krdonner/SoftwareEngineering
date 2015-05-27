@@ -31,15 +31,13 @@ public class MyCalendar extends Activity implements OnClickListener {
     private static final String tag = "MyCalendarActivity";
 
     private TextView currentMonth;
-    private ImageView previousMonth;
-    private ImageView nextMonth;
+    private ImageView previousMonth, nextMonth;
     private GridView calendarView;
     private GridCellAdapter adapter;
     private Calendar _calendar;
     private int month, year;
     private static final String dateTemplate = "MMMM yyyy";
     private static String yearToAddToEvent, monthToAddToEvent, dayToAddToEvent, currentMonthName;
-    private static boolean colorSet = false;
     public static String date;
     public static int dateInInteger;
     public static ArrayList<Integer> dates;
@@ -50,21 +48,11 @@ public class MyCalendar extends Activity implements OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar);
-        final Intent intent = getIntent();
-        final Bundle extraBundle = intent.getExtras();
 
-        user = getIntent().getStringExtra("user");
+        final Intent intent = getIntent();
+        user = intent.getStringExtra("user");
 
         dates = (ArrayList<Integer>) getIntent().getSerializableExtra("dates");
-
-        if (dates.size() == 0 || dates == null) {
-            System.out.println("dates tom");
-
-        } else {
-            for (int i = 0; i < dates.size(); i++) {
-                System.out.println(dates.get(i));
-            }
-        }
 
         _calendar = Calendar.getInstance(Locale.UK);
         month = _calendar.get(Calendar.MONTH) + 1;
@@ -195,7 +183,6 @@ public class MyCalendar extends Activity implements OnClickListener {
             currentMonthName = getMonthAsString(currentMonth);
             daysInMonth = getNumberOfDaysOfMonth(currentMonth);
 
-
             GregorianCalendar cal = new GregorianCalendar(yy, currentMonth, 1);
 
             if (currentMonth == 11) {
@@ -321,7 +308,6 @@ public class MyCalendar extends Activity implements OnClickListener {
                     dayToAddToEvent = theday;
 
                     date = yearToAddToEvent + monthToAddToEvent + dayToAddToEvent;
-                    System.out.println(date);
 
                     Intent intent = new Intent(MyCalendar.this, DayOverview.class);
                     intent.putExtra("user", user);
@@ -367,7 +353,6 @@ public class MyCalendar extends Activity implements OnClickListener {
                     date = yearToAddToEvent + monthToAddToEvent + dayToAddToEvent;
                     getCurrentDayOfMonth();
                     Toast.makeText(getApplicationContext(), yearToAddToEvent + monthToAddToEvent + dayToAddToEvent, Toast.LENGTH_LONG).show();
-                    Log.e("dateeee", "" + date);
 
                     Intent intent = new Intent(MyCalendar.this, AddEvent.class);
                     intent.putExtra("date", date);
@@ -403,7 +388,6 @@ public class MyCalendar extends Activity implements OnClickListener {
             dayToAddToEvent = theday;
 
             dateInInteger = Integer.parseInt(year + monthToAddToEvent + dayToAddToEvent);
-            System.out.println("date in integer" + dateInInteger);
             gridcell.setText(theday);
             gridcell.setTag(dateInInteger);
 
@@ -445,16 +429,11 @@ public class MyCalendar extends Activity implements OnClickListener {
         @Override
         public void onClick(View view) {
             String date_month_year = (String) view.getTag();
-            Log.e("Selected date", date_month_year);
             try {
                 Date parsedDate = dateFormatter.parse(date_month_year);
-                Log.d(tag, "Parsed Date: " + parsedDate.toString());
             } catch (ParseException e) {
-                e.printStackTrace();
+                System.out.println(e);
             }
         }
-
-
-
     }
 }
