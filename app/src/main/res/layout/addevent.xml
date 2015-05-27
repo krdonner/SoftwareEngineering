@@ -14,7 +14,8 @@
         android:layout_marginTop="43dp"
         android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/saveButton"
-        android:layout_alignStart="@+id/saveButton" />
+        android:layout_alignStart="@+id/saveButton"
+        android:textColor="#ff000000" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -26,7 +27,8 @@
         android:layout_marginEnd="91dp"
         android:layout_alignTop="@+id/Start"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textColor="#ff000000" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -37,7 +39,7 @@
         android:layout_alignEnd="@+id/Start"
         android:layout_alignLeft="@+id/Start"
         android:layout_alignStart="@+id/Start"
-        android:hint="hh" />
+        android:hint="HH" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -48,7 +50,7 @@
         android:layout_alignStart="@+id/textView9"
         android:layout_alignRight="@+id/textView9"
         android:layout_alignEnd="@+id/textView9"
-        android:hint="hh" />
+        android:hint="HH" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -60,7 +62,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:hint="activity" />
+        android:hint=" Activity" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -73,7 +75,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:hint="notes" />
+        android:hint=" Notes" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -87,14 +89,15 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:hint="location" />
+        android:hint=" Location" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save activity"
         android:id="@+id/saveButton"
+        android:background="@drawable/button"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/button"/>
+        android:layout_marginBottom="33dp" />
 </RelativeLayout>
