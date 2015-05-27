@@ -27,11 +27,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MyCalendarActivity extends Activity implements OnClickListener {
+public class MyCalendar extends Activity implements OnClickListener {
     private static final String tag = "MyCalendarActivity";
 
     private TextView currentMonth;
-    private ImageView prevMonth;
+    private ImageView previousMonth;
     private ImageView nextMonth;
     private GridView calendarView;
     private GridCellAdapter adapter;
@@ -54,10 +54,10 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
         final Bundle extraBundle = intent.getExtras();
 
         user = getIntent().getStringExtra("user");
-        System.out.println(user);
+
         dates = (ArrayList<Integer>) getIntent().getSerializableExtra("dates");
 
-        if (dates.size() == 0) {
+        if (dates.size() == 0 || dates == null) {
             System.out.println("dates tom");
 
         } else {
@@ -71,8 +71,8 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
         year = _calendar.get(Calendar.YEAR);
 
 
-        prevMonth = (ImageView) this.findViewById(R.id.prevMonth);
-        prevMonth.setOnClickListener(this);
+        previousMonth = (ImageView) this.findViewById(R.id.prevMonth);
+        previousMonth.setOnClickListener(this);
 
         currentMonth = (TextView) this.findViewById(R.id.currentMonth);
         currentMonth.setText(DateFormat.format(dateTemplate,
@@ -101,7 +101,7 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (v == prevMonth) {
+        if (v == previousMonth) {
             if (month <= 1) {
                 month = 12;
                 year--;
@@ -249,7 +249,6 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
             }
 
             for (int i = 0; i < list.size() % 7; i++) {
-                Log.d(tag, "NEXT MONTH:= " + getMonthAsString(nextMonth));
                 list.add(String.valueOf(i + 1) + "-GREY" + "-"
                         + getMonthAsString(nextMonth) + "-" + nextYear);
             }
@@ -324,7 +323,7 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
                     date = yearToAddToEvent + monthToAddToEvent + dayToAddToEvent;
                     System.out.println(date);
 
-                    Intent intent = new Intent(MyCalendarActivity.this, DayOverview.class);
+                    Intent intent = new Intent(MyCalendar.this, DayOverview.class);
                     intent.putExtra("user", user);
                     intent.putExtra("date", date);
                     intent.putExtra("theDay", theday);
@@ -370,7 +369,7 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
                     Toast.makeText(getApplicationContext(), yearToAddToEvent + monthToAddToEvent + dayToAddToEvent, Toast.LENGTH_LONG).show();
                     Log.e("dateeee", "" + date);
 
-                    Intent intent = new Intent(MyCalendarActivity.this, AddEvent.class);
+                    Intent intent = new Intent(MyCalendar.this, AddEvent.class);
                     intent.putExtra("date", date);
                     intent.putExtra("user", user);
                     startActivity(intent);
@@ -427,18 +426,6 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
             return row;
         }
 
-        @Override
-        public void onClick(View view) {
-            String date_month_year = (String) view.getTag();
-            Log.e("Selected date", date_month_year);
-            try {
-                Date parsedDate = dateFormatter.parse(date_month_year);
-                Log.d(tag, "Parsed Date: " + parsedDate.toString());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-
         public int getCurrentDayOfMonth() {
             return currentDayOfMonth;
         }
@@ -454,6 +441,20 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
         public int getCurrentWeekDay() {
             return currentWeekDay;
         }
+
+        @Override
+        public void onClick(View view) {
+            String date_month_year = (String) view.getTag();
+            Log.e("Selected date", date_month_year);
+            try {
+                Date parsedDate = dateFormatter.parse(date_month_year);
+                Log.d(tag, "Parsed Date: " + parsedDate.toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+
 
     }
 }

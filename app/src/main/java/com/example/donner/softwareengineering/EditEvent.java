@@ -28,12 +28,15 @@ public class EditEvent extends Activity {
     DatePicker myDatePicker;
     Button button;
     EditText edActivity, edNotes;
-    int hour, minute, time;
+    int hour, minute, time, starts, ends;
     private static String hourMinute, act, note;
     private Statement state;
-    public String user;
+    public String user, location;
     public int beginning;
     public static int id;
+    private EditText edStarts;
+    private EditText edEnds;
+    private EditText edLocation;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,12 +47,12 @@ public class EditEvent extends Activity {
             user = myBundle.getString("user");
             beginning = myBundle.getInt("begins");
         }
-        myTimePicker = (TimePicker) findViewById(R.id.timePicker);
-        myDatePicker = (DatePicker) findViewById(R.id.datePicker);
-        button = (Button) findViewById(R.id.saveButton);
-        edActivity = (EditText) findViewById(R.id.activity);
-        edNotes = (EditText) findViewById(R.id.notes);
-        myTimePicker.setIs24HourView(true);
+        button = (Button)findViewById(R.id.saveButton);
+        edActivity = (EditText)findViewById(R.id.activity);
+        edNotes = (EditText)findViewById(R.id.notes);
+        edStarts = (EditText)findViewById(R.id.textStart);
+        edEnds = (EditText)findViewById(R.id.textEnd);
+        edLocation = (EditText)findViewById(R.id.location);
 
         setupAsync setA = new setupAsync();
         setA.execute(getApplicationContext());
@@ -57,13 +60,11 @@ public class EditEvent extends Activity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                hour = myTimePicker.getCurrentHour();
-                minute = myTimePicker.getCurrentMinute();
-                hourMinute = Integer.toString(hour) + Integer.toString(minute);
-                time = Integer.parseInt(hourMinute);
+                starts = Integer.parseInt(edStarts.getText().toString());
+                ends = Integer.parseInt(edEnds.getText().toString());
                 act = edActivity.getText().toString();
                 note = edNotes.getText().toString();
-
+                location = edLocation.getText().toString();
                 EditAsync ea = new EditAsync();
                 ea.execute(getApplicationContext());
             }
@@ -85,10 +86,10 @@ public class EditEvent extends Activity {
             Connection dbConnection;
 
             int identification;
-            int begins;
-            String activity, notes;
+            int begins, ends;
+            String activity, notes, location;
 
-            String idSQL = "SELECT id, activity, notes, begins FROM calendar WHERE userName = " + "'" + user + "'" + " and begins = " + "'" + beginning + "'"; //WORK IN PROGRESS
+            String idSQL = "SELECT id, activity, notes, begins, ends, location FROM calendar WHERE userName = " + "'" + user + "'" + " and begins = " + "'" + beginning + "'"; //WORK IN PROGRESS
 
             try {
                 dbConnection = getDBConnection();
@@ -106,14 +107,22 @@ public class EditEvent extends Activity {
                     System.out.println(notes);
                     begins = rs.getInt("begins");
                     System.out.println(begins);
+                    ends = rs.getInt("ends");
+                    location = rs.getString("location");
 
                     final String finalActivity = activity;
                     final String finalNotes = notes;
+                    final int finalStarts = begins;
+                    final int finalEnds = ends;
+                    final String finalLocation = location;
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             edActivity.setText(finalActivity);
                             edNotes.setText(finalNotes);
+                            edLocation.setText(finalLocation);
+                            edStarts.setText(String.valueOf(finalStarts));
+                            edEnds.setText(String.valueOf(finalEnds));
                         }
                     });
                 }
@@ -168,7 +177,7 @@ public class EditEvent extends Activity {
             System.out.println("updateDB ID = " + id);
 
             String updateTableSQL = "UPDATE calendar "
-                    + "SET activity = " + "'" + act + "'" + "," + " notes = " + "'" + note + "'" + "," + " begins = " + hour
+                    + "SET activity = " + "'" + act + "'" + "," + " notes = " + "'" + note + "'" + "," + " begins = " + starts + "," + "ends = " + ends + "," + " location = " + "'" + location + "'"
                     + " WHERE id = " + id;
 
             try {

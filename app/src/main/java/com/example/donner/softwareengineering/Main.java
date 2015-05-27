@@ -94,7 +94,7 @@ public class Main extends Activity {
 
             if (user.equals(u) && pass.equals(p)) {
                 System.out.println("Logging in!");
-                Intent intent = new Intent(Main.this, MyCalendarActivity.class);
+                Intent intent = new Intent(Main.this, MyCalendar.class);
                 intent.putExtra("dates", dates);
                 intent.putExtra("user", user);
                 startActivity(intent);

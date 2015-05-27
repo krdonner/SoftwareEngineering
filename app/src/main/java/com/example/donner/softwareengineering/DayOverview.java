@@ -1,7 +1,9 @@
 package com.example.donner.softwareengineering;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -55,6 +57,7 @@ public class DayOverview extends Activity {
         values = new String[]{"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17",
                 "18", "19", "20", "21", "22", "23"};
         System.out.print(dateInteger + "   " + dateFromDB);
+
     }
 
 
@@ -76,7 +79,8 @@ public class DayOverview extends Activity {
             Log.e("testar", dateInteger + " " + dateFromDB);
 
             if (dateInteger == dateFromDB) {
-                values[beginsFromDB] += " " + activityFromDB + " " + " " + locationFromDB;
+                values[beginsFromDB] += "\n"+"Activity: " + activityFromDB + " \n" + "Location: " + locationFromDB + "\n"
+                        +"Notes: "+  notesFromDB + "\n" + "Ends: " + endsFromDB;
             }
 
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
@@ -107,8 +111,12 @@ public class DayOverview extends Activity {
                                     deleteAsync da = new deleteAsync();
                                     da.execute();
 
-                                    Intent intent = new Intent(DayOverview.this, MyCalendarActivity.class);
-                                    startActivity(intent);
+                                    Intent mStartActivity = new Intent(DayOverview.this, Main.class);
+                                    int mPendingIntentId = 123456;
+                                    PendingIntent mPendingIntent = PendingIntent.getActivity(DayOverview.this, mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+                                    AlarmManager mgr = (AlarmManager)DayOverview.this.getSystemService(DayOverview.this.ALARM_SERVICE);
+                                    mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+                                    System.exit(0);
                                 }
                             });
                     AlertDialog alert = builder.create();
